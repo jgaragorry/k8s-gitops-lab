@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/jgaragorry/k8s-gitops-lab.git
     targetRevision: HEAD
-    path: workloads/tools 
+    path: workloads/tools/tools 
   destination:
     server: https://kubernetes.default.svc
     namespace: external-tools
