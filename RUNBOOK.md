@@ -609,12 +609,12 @@ spec:
 ### 2.1 Crear Cluster Kubernetes
 
 ```bash
-k3d cluster create k3d-enterprise-lab \\
-    --servers 1 \\
-    --agents 2 \\
-    -p "8085:8085@loadbalancer" \\
-    -p "30080:30080@agent:0" \\
-    --image=rancher/k3s:latest \\
+k3d cluster create k3d-enterprise-lab \
+    --servers 1 \
+    --agents 2 \
+    -p "8085:8085@loadbalancer" \
+    -p "30080:30080@agent:0" \
+    --image=rancher/k3s:latest \
     --k3s-arg "--disable=traefik@server:0"
 
 kubectl cluster-info
