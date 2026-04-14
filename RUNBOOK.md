@@ -903,9 +903,9 @@ kubectl get application platform-bootstrap -n argocd -o yaml
 
 kubectl describe application platform-bootstrap -n argocd
 
-kubectl patch application platform-bootstrap -n argocd -p \\
+kubectl patch application platform-bootstrap -n argocd -p \
     '{\"spec\":{\"syncPolicy\":{\"automated\":null}}}' --type merge
-kubectl patch application platform-bootstrap -n argocd -p \\
+kubectl patch application platform-bootstrap -n argocd -p \
     '{\"spec\":{\"syncPolicy\":{\"automated\":{\"prune\":true,\"selfHeal\":true}}}}' --type merge
 ```
 
