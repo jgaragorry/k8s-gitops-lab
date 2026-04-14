@@ -794,31 +794,58 @@ cd /path/to/repo && git log --oneline -10
 #!/bin/bash
 set +e
 
-RED='\\033[0;31m'
-GREEN='\\033[0;32m'
-YELLOW='\\033[1;33m'
-NC='\\033[0m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
 
-log_info() {
-    echo -e "${YELLOW}[*]${NC} $1"
-}
+log_info() { echo -e "${YELLOW}[*]${NC} $1"; }
+log_success() { echo -e "${GREEN}[✓]${NC} $1"; }
 
-log_success() {
-    echo -e "${GREEN}[✓]${NC} $1"
-}
-
-echo -e "${RED}"
-echo "╔════════════════════════════════════════════════════════════════╗"
-echo "║  DESTRUCCIÓN TOTAL DEL LABORATORIO                             ║"
-echo "║  Esta operación no es reversible                               ║"
-echo "╚════════════════════════════════════════════════════════════════╝"
-echo -e "${NC}"
+echo -e "${RED}╔════════════════════════════════════════════════════════════════╗"
+echo -e "║           DESTRUCCIÓN TOTAL Y LIMPIEZA QUIRÚRGICA              ║"
+echo -e "╚════════════════════════════════════════════════════════════════╝${NC}"
 
 read -p "¿Realmente deseas continuar? (escribe 'CONFIRMAR'): " confirm
-if [ "$confirm" != "CONFIRMAR" ]; then
-    echo "Operación cancelada."
-    exit 0
-fi
+[[ "$confirm" != "CONFIRMAR" ]] && { echo "Operación cancelada."; exit 0; }
+
+log_info "1/5: Liberando puertos y deteniendo procesos zombis..."
+# Liberar puertos específicos del lab (8085 y 30080)
+sudo fuser -k 8085/tcp > /dev/null 2>&1 || true
+sudo fuser -k 30080/tcp > /dev/null 2>&1 || true
+# Matar procesos de herramientas
+killall kubectl k9s k3d 2>/dev/null || true
+log_success "Puertos liberados y procesos terminados"
+
+log_info "2/5: Eliminando clústeres de k3d..."
+k3d cluster delete --all > /dev/null 2>&1 || true
+log_success "Todos los clústeres eliminados"
+
+log_info "3/5: Limpieza profunda de Docker (Contenedores huérfanos)..."
+# Esto detiene y elimina TODO, incluyendo tu distroless-app
+docker stop $(docker ps -aq) > /dev/null 2>&1 || true
+docker rm $(docker ps -aq) > /dev/null 2>&1 || true
+docker system prune -a --volumes -f > /dev/null 2>&1
+log_success "Docker Engine purgado completamente"
+
+log_info "4/5: Saneando configuraciones de Red y Kubectl..."
+kubectl config delete-context k3d-enterprise-lab 2>/dev/null || true
+kubectl config delete-cluster k3d-enterprise-lab 2>/dev/null || true
+log_success "Contextos de red eliminados"
+
+log_info "5/5: Eliminando archivos temporales y credenciales..."
+rm -rf ~/.kube/config.bak
+rm -f ~/.argocd_credentials /tmp/argocd-portforward.log /tmp/pf.log
+log_success "Archivos locales eliminados"
+
+echo -e "\n${GREEN}════════════════════════════════════════════════════════════════"
+log_success "SISTEMA 100% LIMPIO E INMUTABLE"
+echo -e "════════════════════════════════════════════════════════════════${NC}\n"
+
+log_info "Estado actual:"
+echo "  Contenedores activos: $(docker ps -q | wc -l)"
+echo "  Puertos 8085/30080: $(ss -tuln | grep -E '8085|30080' | wc -l)"
+echo "  Imágenes Docker: $(docker images -q | wc -l)"
 
 log_info "Deteniendo procesos..."
 killall kubectl > /dev/null 2>&1 || true
