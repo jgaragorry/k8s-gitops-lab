@@ -640,7 +640,7 @@ kubectl get pods -n argocd -o wide
 ### 2.3 Obtener Credenciales
 
 ```bash
-ARGOCD_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret \\
+ARGOCD_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret \
     -o jsonpath="{.data.password}" | base64 -d)
 echo "ArgoCD Admin Password: $ARGOCD_PASSWORD"
 
@@ -651,7 +651,7 @@ chmod 600 ~/.argocd_credentials
 ### 2.4 Activar Acceso Web
 
 ```bash
-nohup kubectl port-forward svc/argocd-server -n argocd 8085:443 \\
+nohup kubectl port-forward svc/argocd-server -n argocd 8085:443 \
     > /tmp/argocd-portforward.log 2>&1 &
 
 sleep 5
@@ -689,7 +689,7 @@ kubectl get pods -A -o wide
 ### 3.2 Validación de ArgoCD
 
 ```bash
-kubectl get applications -n argocd -o json | \\
+kubectl get applications -n argocd -o json | \
     jq '.items[] | {name: .metadata.name, status: .status.operationState.phase, sync: .status.sync.status}'
 
 kubectl get applicationcontrollers -n argocd
@@ -716,7 +716,7 @@ curl http://localhost:30080/
 
 curl -k https://localhost:8085/api/health
 
-kubectl run test-pod --image=busybox -it --rm -- \\
+kubectl run test-pod --image=busybox -it --rm -- \
     wget -O- http://redis.external-tools:6379
 ```
 
@@ -775,10 +775,10 @@ docker system df
 ### 4.5 Git Sync Monitoring
 
 ```bash
-kubectl get applications -n argocd -o json | \\
+kubectl get applications -n argocd -o json | \
     jq '.items[] | {name: .metadata.name, lastSync: .status.operationState.finishedAt}'
 
-kubectl get applications -n argocd -o json | \\
+kubectl get applications -n argocd -o json | \
     jq '.items[] | {name: .metadata.name, sync_status: .status.sync.status}'
 
 cd /path/to/repo && git log --oneline -10
