@@ -846,46 +846,6 @@ log_info "Estado actual:"
 echo "  Contenedores activos: $(docker ps -q | wc -l)"
 echo "  Puertos 8085/30080: $(ss -tuln | grep -E '8085|30080' | wc -l)"
 echo "  Imágenes Docker: $(docker images -q | wc -l)"
-
-log_info "Deteniendo procesos..."
-killall kubectl > /dev/null 2>&1 || true
-killall k9s > /dev/null 2>&1 || true
-killall k3d > /dev/null 2>&1 || true
-sleep 2
-log_success "Procesos detenidos"
-
-log_info "Eliminando cluster k3d-enterprise-lab..."
-k3d cluster delete k3d-enterprise-lab 2>/dev/null || true
-sleep 3
-log_success "Cluster eliminado"
-
-log_info "Limpiando Docker (imágenes, contenedores, volúmenes)..."
-docker system prune -a --volumes -f > /dev/null 2>&1
-log_success "Sistema Docker limpio"
-
-log_info "Eliminando contextos y clusters de kubectl..."
-kubectl config delete-context k3d-enterprise-lab 2>/dev/null || true
-kubectl config delete-cluster k3d-enterprise-lab 2>/dev/null || true
-log_success "Contextos eliminados"
-
-log_info "Limpiando archivos de configuración..."
-rm -rf ~/.kube/config.bak
-rm -f ~/.argocd_credentials
-rm -f /tmp/argocd-portforward.log
-log_success "Archivos locales limpiados"
-
-echo ""
-echo -e "${GREEN}════════════════════════════════════════════════════════════════${NC}"
-log_success "LABORATORIO COMPLETAMENTE DESTRUIDO"
-echo -e "${GREEN}════════════════════════════════════════════════════════════════${NC}"
-echo ""
-log_info "Estado actual:"
-echo "  Clusters k3d: $(k3d cluster list 2>/dev/null | tail -n +2 | wc -l)"
-echo "  Imágenes Docker: $(docker images -q 2>/dev/null | wc -l)"
-echo "  Volúmenes Docker: $(docker volume ls -q 2>/dev/null | wc -l)"
-echo "  Contextos kubectl: $(kubectl config get-contexts -o name 2>/dev/null | wc -l)"
-echo ""
-echo -e "${YELLOW}WSL está limpia y lista para otro despliegue${NC}"
 ```
 
 Ejecución:
