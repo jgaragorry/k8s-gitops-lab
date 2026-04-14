@@ -480,18 +480,16 @@ Has completado exitosamente el **Kubernetes GitOps & SRE Lab v2.0** - una implem
 
 ## 🌟 Características Destacadas
 
-╔════════════════════════════════════════════════════════════════╗
-║                      CARACTERÍSTICA                           ║
-╠════════════════════════════════════════════════════════════════╣
-║ ✅ Idempotencia Total      - Ejecuta N veces = mismo resultado ║
-║ ✅ GitOps Nativo           - Source of truth en Git            ║
-║ ✅ Auto-healing            - Recuperación automática           ║
-║ ✅ Observabilidad Nativa   - Dashboards tiempo real            ║
-║ ✅ Inmutabilidad           - Cambios solo por Git              ║
-║ ✅ Segregación Limpia      - Namespaces por responsabilidad    ║
-║ ✅ Cleanup Total           - Destrucción sin residuos          ║
-║ ✅ Documentación Completa  - Ejecutable paso a paso            ║
-╚════════════════════════════════════════════════════════════════╝
+                      CARACTERÍSTICA                           
+
+ ✅ Idempotencia Total      - Ejecuta N veces = mismo resultado 
+ ✅ GitOps Nativo           - Source of truth en Git            
+ ✅ Auto-healing            - Recuperación automática           
+ ✅ Observabilidad Nativa   - Dashboards tiempo real            
+ ✅ Inmutabilidad           - Cambios solo por Git              
+ ✅ Segregación Limpia      - Namespaces por responsabilidad    
+ ✅ Cleanup Total           - Destrucción sin residuos          
+ ✅ Documentación Completa  - Ejecutable paso a paso            
 
 ---
 
@@ -528,17 +526,11 @@ Made with ❤️ by Jose Garagorry
 
 Cloud Architecture | DevOps | Kubernetes | SRE
 
-╔════════════════════════════════════════════════════════════════╗
-║  Infrastructure as Code is not just a tool,                   ║
-║  it's a philosophy of reproducibility and reliability.         ║
-║                                       - SRE Philosophy          ║
-╚════════════════════════════════════════════════════════════════╝
 
-LinkedIn: https://www.linkedin.com/in/jgaragorry
-GitHub: https://github.com/jgaragorry/
-Website: https://geekmonkeytech.com/
-WhatsApp: +56 956744034
-
+LinkedIn: https://www.linkedin.com/in/jgaragorry 
+GitHub: https://github.com/jgaragorry/ 
+Website: https://geekmonkeytech.com/ 
+WhatsApp: +56 956744034  
 Repository: https://github.com/jgaragorry/k8s-gitops-lab
 
 ---
